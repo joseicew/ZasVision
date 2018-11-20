@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Añadir Logros</title>
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <style>
+        .zas1 {
+            color: #E6B10E;
+        }
+        
+        .zas2 {
+            color: #51B2B5;
+        }
+        
+        .bg-zas1 {
+            background-color: #E6B10E;
+        }
+        
+        .bg-zas2 {
+            background-color: #51B2B5;
+        }
+        
+        .zas3 {
+            color: #5B8081;
+        }
+        
+        .bg-zas3 {
+            background-color: #5B8081;
+        }
+        
+        .error_alert {
+            flex: 0 1 auto;
+            align-self: auto;
+        }
+    </style>
+    <script>
+        // Initialize Firebase
+        var config = {
+
+            apiKey: "AIzaSyAqXqfiKPCNTCfVOgdaZTiOqCbuVk2yO-M",
+            authDomain: "zasvision-86b04.firebaseapp.com",
+            databaseURL: "https://zasvision-86b04.firebaseio.com",
+            projectId: "zasvision-86b04",
+            storageBucket: "zasvision-86b04.appspot.com",
+            messagingSenderId: "1092098673609"
+        };
+
+        firebase.initializeApp(config);
+
+        var achie = {
+            name: '',
+            description: '',
+            cost: 0,
+            experience: 0,
+
+            //SPecial Token
+            type_token: 0,
+            token: 0,
+
+            //Default 
+            isCollapsed: false,
+            unlock: false,
+        };
+
+        var id;
+        var error_name = false;
+        var error_des = false;
+        var error_cost = false;
+        var error_exp = false;
+
+        var ref = firebase.database().ref("achievements");
+
+        ref.on("value", function(snapshot) {
+
+            document.getElementById('output').innerHTML = JSON.stringify(snapshot.val(), null, 2);
+
+        });
+
+        function writeUserData() {
+
+            //Lista de caracteristicas del logro
+            console.log(document.getElementById('name').value);
+            if (document.getElementById('name').value != '') {
+                achie.name = document.getElementById('name').value;
+            } else {
+                error_name = true;
+            }
+            achie.description = document.getElementById('description').value;
+            achie.cost = document.getElementById('cost').value;
+            achie.experience = document.getElementById('experience').value;
+
+            if (document.getElementById('type_token').value >= 0 &&
+                document.getElementById('token').value >= 0) {
+                achie.type_token = document.getElementById('type_token').value;
+                achie.token = document.getElementById('token').value;
+            }
+
+            //Random con la hora del sistema
+            id = new Date().valueOf();
+
+            //URL a guardar
+            referencia = "achievements/" + id;
+            firebase.database().ref(referencia).set(achie);
+        }
+    </script>
+
+
+
+</head>
+
+<body class="container bg-zas3">
+    <div class="d-flex justify-content-center m-0 p-0">
+        <img src="https://previews.dropbox.com/p/thumb/AAPxYgJCetNUof1IzOYwDocjxjARxsR1EDo0IcJhjvZE9HVuKUt4KasKUVYF0z24gJoUJhWndELeYH0XD6ULS1OdlnZTvtPUyRoxLP0Yv2JDHeSvpBrCcK4Uh4InOgXvrBwbv3uyu0bn_YR_y5y5rR6jhxL68uC9DHhKaKDsU7-P6Q/p.png?size=1600x1200&size_mode=3"
+            alt="" class="h-100 m-4 col-3">
+
+    </div>
+
+    <div class="p-4 row col-4 m-auto bg-zas1 rounded" id="input">
+
+        <h2 class="col-12 text-center">Logro</h2>
+        <input type="text" class="col-9 d-inline ml-auto mr-auto text-center rounded" name="" id="name" placeholder="Nombre" required>
+        <div class="form-group col-9 d-inline  ml-auto mr-auto p-0  rounded">
+            <label for=""></label>
+            <textarea class="form-control text-center" name="" id="description" rows="3" placeholder="Descripción" required></textarea>
+        </div>
+        <input type="number" class="col-9 d-inline ml-auto mr-auto mb-3 text-center rounded" name="" id="cost" placeholder="Coste" required>
+        <input type="number" class="col-9 d-inline  ml-auto mr-auto text-center rounded" name="" id="experience" placeholder="Experiencia" required>
+        <hr class="col-12 p-0">
+
+        <!-- Alerts! -->
+        <div id="error"></div>
+
+        <hr class="col-12 mb-3 p-0">
+
+        <h2 class="mt-3 mb-3 col-12 text-center">Token especiales</h2>
+        <div class="d-flex justify-content-around w-100">
+
+            <select class="p-2  rounded" name="" id="type_token">
+                <option value="0">Ninguno</option>
+                <option value="1">Lentillas</option>
+                <option value="2">Cristales</option>
+                <option value="3">Otros</option>
+            </select>
+
+            <input type="number" class="p-1 text-center rounded" name="" id="token" placeholder="Coste especial">
+
+        </div>
+
+
+        <button class="btn ml-auto mr-auto col-6 btn bg-zas2 mt-3" onclick="writeUserData()">Insert</button>
+
+    </div>
+
+</body>
+
+</html>

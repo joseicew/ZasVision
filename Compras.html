@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Añadir puntos</title>
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <style>
+        .zas1 {
+            color: #E6B10E;
+        }
+        
+        .zas2 {
+            color: #51B2B5;
+        }
+        
+        .bg-zas1 {
+            background-color: #E6B10E;
+        }
+        
+        .bg-zas2 {
+            background-color: #51B2B5;
+        }
+        
+        .zas3 {
+            color: #5B8081;
+        }
+        
+        .bg-zas3 {
+            background-color: #5B8081;
+        }
+        
+        .error_alert {
+            flex: 0 1 auto;
+            align-self: auto;
+        }
+    </style>
+
+    <script>
+        // Initialize Firebase
+        var config = {
+
+            apiKey: "AIzaSyAqXqfiKPCNTCfVOgdaZTiOqCbuVk2yO-M",
+            authDomain: "zasvision-86b04.firebaseapp.com",
+            databaseURL: "https://zasvision-86b04.firebaseio.com",
+            projectId: "zasvision-86b04",
+            storageBucket: "zasvision-86b04.appspot.com",
+            messagingSenderId: "1092098673609"
+        };
+
+        firebase.initializeApp(config);
+
+        var points = {
+            email: "",
+
+            //SPecial Token
+            token: 0,
+            type_token: 0,
+
+            points: 0,
+        };
+
+        var ref = firebase.database().ref("User");
+
+        var error_email = false;
+        var error_puntos = false;
+
+
+        function writeUserData() {
+            //Lista de caracteristicas del logro
+            points.email = document.getElementById('email').value;
+            points.points = document.getElementById('points').value;
+
+            if (document.getElementById('type_token').value >= 0 &&
+                document.getElementById('token').value >= 0) {
+                points.type_token = document.getElementById('type_token').value;
+                points.token = document.getElementById('token').value;
+            }
+
+
+            //Actualizar el usuario
+
+            var users;
+            var user_UID = '';
+
+            ref.once("value").then(function(snapshot) {
+                users = snapshot.val();
+
+                for (var user in users) {
+
+                    if (users[user].email === points.email) {
+
+                        if (parseInt(points.points) == 0 || points.points == '') {
+                            error_puntos = true;
+                        }
+
+                        users[user].achievement_point = parseInt(users[user].achievement_point) + parseInt(points.points);
+                        user_UID = user;
+
+                        //Tokens
+                        if (points.type_token == 1) {
+                            //users[user].token1 += token;
+                            users[user].token1 = parseInt(users[user].token1) + parseInt(points.token);
+                        }
+                        if (points.type_token == 2) {
+                            //users[user].token2 += token;
+                            users[user].token2 = parseInt(users[user].token2) + parseInt(points.token);
+                        }
+                        if (points.type_token == 3) {
+                            //users[user].token3 += token;
+                            users[user].token3 = parseInt(users[user].token3) + parseInt(points.token);
+                        }
+
+                    }
+
+                }
+                if (user_UID == '') {
+                    error_email = true;
+                }
+
+                //URL a guardar
+                if (users && (user_UID != "") && !error_email && !error_puntos) {
+
+                    console.log("Added");
+                    referencia = "User/" + user_UID;
+
+                    firebase.database().ref(referencia).set(users[user_UID]);
+
+
+                    document.getElementById("error").innerHTML = "<div class=\"alert alert-success alert-dismissible error_alert fade show\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>¡Correcto!</strong> El usuario <strong>" + users[user_UID].nick + "</strong> ha recibido <strong>" + points.points + "</strong> puntos, teniendo un total de <strong>" + users[user_UID].achievement_point + "</strong></div>";
+
+                    document.getElementById('email').value = "";
+                    document.getElementById('points').value = 0;
+                    document.getElementById('type_token').value = 0;
+                    document.getElementById('token').value = 0;
+                    user_UID = '';
+
+                } else {
+                    if (error_email) {
+                        error_email = false;
+                        console.log("Error user");
+                        document.getElementById("error").innerHTML = "<div class=\"alert alert-danger alert-dismissible error_alert fade show\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>¡Error!</strong> No se encuentra al usuario.</div>";
+
+                    } else if (error_puntos) {
+                        error_puntos = false;
+                        console.log("Error puntos");
+                        document.getElementById("error").innerHTML = "<div class=\"alert alert-danger alert-dismissible error_alert fade show\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>¡Error!</strong> No se han asignado puntos.</div>";
+                    }
+                }
+            })
+
+        }
+    </script>
+
+
+
+</head>
+
+<body class="container col-12 col-sm-8 col-md-6 col-xl-4  mt-4 bg-zas3">
+
+    <img src="https://previews.dropbox.com/p/thumb/AAPxYgJCetNUof1IzOYwDocjxjARxsR1EDo0IcJhjvZE9HVuKUt4KasKUVYF0z24gJoUJhWndELeYH0XD6ULS1OdlnZTvtPUyRoxLP0Yv2JDHeSvpBrCcK4Uh4InOgXvrBwbv3uyu0bn_YR_y5y5rR6jhxL68uC9DHhKaKDsU7-P6Q/p.png?size=1600x1200&size_mode=3"
+        alt="" class="img-fluid w-auto m-auto p-4">
+
+    <div class="p-5 row bg-zas1 border border-3 rounded rounded-circle" id="input">
+
+        <!-- User and Points -->
+
+        <h4 class="col-10 text-center m-auto pt-4 pb-4">User & Points</h4>
+
+        <input type="email" class="col-12 col-md-6 d-inline mb-2" name="" id="email" placeholder="Email" required>
+        <input type="number" class="col-12 col-md-6 d-inline mb-2" name="" id="points" placeholder="Points" required>
+
+        <hr class="col-12 w-100 p-0 m-0">
+        <!-- <input type="number" class="m-3 col-6 d-inline"    name=""  placeholder="Tokens:1,2,3"> -->
+
+
+
+        <!-- Alerts -->
+        <div id="error" class="d-flex justify-content-center w-100 mt-3">
+
+        </div>
+
+
+        <!-- Special Token -->
+
+        <hr class="col-12 w-100 p-0 m-0">
+
+        <div class="col-12 mb-5">
+
+            <h4 class="mt-2 mb-4 col-12 text-center">Special Tokens</h4>
+
+            <div class="row">
+
+                <select class="col-12 col-md-6 d-inline mb-2" name="" id="type_token">
+                    <option value="0">None</option>
+                    <option value="1">Lents </option>
+                    <option value="2">Glasses</option>
+                    <option value="3">Other</option>
+                </select>
+
+                <input type="number" class="col-12 col-md-6 mb-2 d-inline" name="" id="token" placeholder="Amount">
+            </div>
+        </div>
+
+        <button class="btn col-6 btn bg-zas2 m-auto border border-3 border-success" onclick="writeUserData()">
+            Add Points
+        </button>
+
+    </div>
+
+    <!-- <pre class="m-3 col-12" id="output"></pre> -->
+</body>
+
+</html>
