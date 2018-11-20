@@ -1,0 +1,38 @@
+<h2 class="text-center text-zas2 bg-zas1 border border-3 border-zas2 ml-5 mr-5 p-3 rounded rounded-circle  ">Registro</h2>
+
+<div class="row">
+    <div class="col-md-12 mt-5">
+        <form (ngSubmit)="guardar()" #forma="ngForm">
+
+
+            <div class="form-group">
+                <input [(ngModel)]="user.name" type="text" name="name" class="border-3 border-zas2 rounded-top form-control" placeholder="Nombre" required>
+            </div>
+
+            <div class="form-group">
+                <input [(ngModel)]="user.surname" type="text" name="surname" class="border-3 border-zas2 rounded-top form-control" placeholder="Apellido" required>
+            </div>
+
+            <div class="form-group">
+                <input [(ngModel)]="user.email" type="email" name="email" class="form-control border border-3  border-zas2" placeholder="Email" required>
+            </div>
+
+            <div class="form-group">
+                <input [(ngModel)]="user.nick" type="text" name="nick" class="form-control border border-zas2 border-3 " placeholder="Apodo" required>
+            </div>
+
+            <div class="form-group">
+                <input [(ngModel)]="user.pass" type="password" name="contraseña" class="border-3 border-bottom-0 border border-zas2 form-control" placeholder="Contraseña" required>
+                <input [(ngModel)]="pass_test" type="password" name="contraseña" class="border-3 border border-zas2  form-control" placeholder="Repita la contraseña" required>
+            </div>
+
+            <div class="form-group">
+                <button [disabled]="!forma.valid" type="submit" class="col-8 btn btn-zas2">
+                Finalizar Registro
+              </button>
+                <button class="col-4 btn btn-danger" [routerLink]="['/login']">Regresar</button>
+
+            </div>
+        </form>
+    </div>
+</div>

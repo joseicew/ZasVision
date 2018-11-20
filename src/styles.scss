@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+
+$theme-colors: ( "zas1": #E6B10E, "zas2": #51B2B5, "secondary":#5B8081, "transparente":transparent);
+@import "node_modules/bootstrap/scss/bootstrap";
+body {
+    background-image: url('./assets/img/BgLogin.jpg');
+    background-color: #cccccc;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-color: #5B8081;
+}
+
+a.text-zas1:hover,
+a.text-zas1:focus,
+.zas-focus {
+    color: #E6B10E !important;
+    border: solid 1px #E6B10E;
+    border-right: none;
+    border-left: none;
+    font-size: 1.1em;
+}
+
+.logInImg {
+    height: 200px;
+    width: 100%;
+    opacity: 0.4;
+    position: relative;
+    top: 80px;
+    margin-bottom: -15px;
+}
+
+.logInError {
+    top: 50%;
+    z-index: 1;
+}
+
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    border-width: 3px;
+}
+
+.border-3 {
+    border-width: 3px !important;
+}

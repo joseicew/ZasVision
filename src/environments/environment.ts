@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyAqXqfiKPCNTCfVOgdaZTiOqCbuVk2yO-M",
+    authDomain: "zasvision-86b04.firebaseapp.com",
+    databaseURL: "https://zasvision-86b04.firebaseio.com",
+    projectId: "zasvision-86b04",
+    storageBucket: "zasvision-86b04.appspot.com",
+    messagingSenderId: "1092098673609"
+  }
 };
 
 /*

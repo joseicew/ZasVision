@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <form class="row p-5">
+
+        <img src="src\assets\img\LogoTransparente.gif" class="w-100 h-50 mb-5  bg-gray rounded img-rounded p-1 " alt="Zas Vision Logo">
+        <img src="src\assets\img\LogIn.png" class="logInImg" alt="Imagen Inicio">
+
+        <ngb-alert *ngIf="!wrongData" class="position-absolute logInError" [dismissible]="true" (close)="wrongData=true">
+            <strong>¡Error!</strong><br> No se encuentra al usuario.
+        </ngb-alert>
+
+        <input class="col-12 mt-5 mb-1 border border-zas2 rounded-top bg-transparent border-3" #email name="email" type="text " placeholder="Email ">
+        <input class="col-12 mb-3 border border-zas2 rounded-bottom bg-transparent border-3" #password name="pass" type="password" placeholder="Contraseña">
+
+
+        <button type="button " class="btn-block mt-3 mb-3 btn btn-zas2 border-weight " (click)="logIn(email.value,password.value) ">Iniciar Sesión</button>
+        <button type="button " class="btn-block mb-3 btn btn-zas1 border-weight" [routerLink]="[ '/signin'] " name="signInBtn ">Registrarse</button>
+
+
+    </form>
+
+</div>

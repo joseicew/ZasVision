@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand navbar-dark bg-zas2 p-0">
+    <div class="col-12" id="navbarText">
+        <ul class="navbar-nav row p-0">
+            <li class="nav-item col-4 p-0 text-center">
+                <a class="nav-link m-2" [routerLinkActive]="['true','zas-focus']" [routerLink]="['homeMenu']">
+                    <fa-icon icon="home"></fa-icon> Inicio</a>
+            </li>
+            <li class="nav-item col-4 p-0 text-center">
+                <a class="nav-link m-2" [routerLinkActive]="['true','zas-focus']" [routerLink]="['achievementMenu']">
+                    <fa-icon icon="medal"></fa-icon> Logros</a>
+            </li>
+            <li class="nav-item col-4 p-0 text-center">
+                <a class="nav-link m-2" [routerLinkActive]="['true','zas-focus']" [routerLink]="['profileMenu']">
+                    <fa-icon icon="user-circle"></fa-icon> Perfil</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,29 @@
+<div class="container-fluid mt-3 mb-5">
+    <div *ngFor="let ach of ach_list;let i = index" class="row pr-4 pl-4 pt-3">
+
+        <button [ngClass]="{'btn-zas1 col-7': !ach.unlock, 'btn btn-secondary col-12':ach.unlock}" type="button" class="btn w-100 text-left" (click)="ach.isCollapsed = !ach.isCollapsed" [attr.aria-expanded]="!ach.isCollapsed">
+            {{ach.name}}
+        </button>
+
+        <button [ngClass]="{'btn-zas2 col-5 d-flex flex-row-reverse justify-content-around': !ach.unlock, 'btn btn-secondary d-none':ach.unlock}" type="button" class="btn w-100 " (click)="ach.unlock = buy(ach.unlock, ach)">
+            <span class="p-1">{{ach.cost}} <fa-icon icon="eye" class="text-zas1"></fa-icon></span>
+            <span *ngIf="ach.type_token==1" class="p-1">{{ach.token}} <fa-icon icon="bullseye"   class="text-zas1"></fa-icon></span>
+            <span *ngIf="ach.type_token==2" class="p-1">{{ach.token}} <fa-icon icon="glasses"    class="text-zas1"></fa-icon></span>
+            <span *ngIf="ach.type_token==3" class="p-1">{{ach.token}} <fa-icon icon="yin-yang"   class="text-zas1"></fa-icon></span>
+        </button>
+
+        <div class="w-100" id="collapseExample{{i}}" [ngbCollapse]="!ach.isCollapsed">
+            <div class="card">
+                <div class="card-body">
+                    {{ach.description}}
+                </div>
+                <div class="card-footer">
+                    Experiencia: {{ach.experience}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
