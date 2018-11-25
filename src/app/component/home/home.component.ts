@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "../../services/auth.service";
+import { LevelService } from "../../services/level.service";
 import { Router, RouteConfigLoadEnd } from "@angular/router";
 import { User } from "../../interfaces/user.interface";
 import * as firebase from "firebase";
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit {
   public ach_list: any = [];
   public key:string;
 
-  constructor(public authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, private router: Router, private level$:LevelService) {
     //Al inicializar el programa cogeremos los datos del usuario para guardarlos en la Variable User.
     this.authService.getUsers().subscribe(data => {
       console.log("All users" + data);
@@ -30,9 +31,12 @@ export class HomeComponent implements OnInit {
               console.log("Usuario encontrado");
               this.user = data[user];
               this.user.pass='';
+              
               //Local Storage
               localStorage.setItem("LocalUser", JSON.stringify(this.user));
 
+              //Lvl up the user in local vars
+              level$.levelUp(this.user.xp);
               
             }
           }
@@ -48,6 +52,11 @@ export class HomeComponent implements OnInit {
   }
   getAch() {
     return this.ach_list;
+  }
+
+  lvlUpAlert(){
+    //Call a set value of the inner HTML to show the Alert
+    console.log("Level UP");
   }
 
   ngOnInit() {}

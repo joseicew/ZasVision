@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeComponent } from '../home.component';
 import { LevelService } from '../../../services/level.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-profile-menu',
@@ -32,9 +31,8 @@ export class ProfileMenuComponent implements OnInit {
     this.other_token = this.user.token3;
     this.actual_points = this.user.achievement_point;
   
-    this.user_rank = level$.levelUp(this.user.xp)[0];
-    console.log(level$.levelUp(this.user.xp)[1]);
-    this.percent = level$.levelUp(this.user.xp)[1] / this.user_rank ;
+    this.user_rank = level$.user_lvl;
+    this.percent = level$.user_exp / this.user_rank ;
 
     }
     

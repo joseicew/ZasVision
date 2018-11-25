@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/services/auth.service";
+import { LevelService } from "src/app/services/level.service";
 import { HomeComponent } from "../home.component";
 import { Achievement } from "../../../interfaces/achievement.interface";
+import { stringify } from "@angular/core/src/render3/util";
 
 @Component({
   selector: "app-achievement-menu",
@@ -12,7 +14,7 @@ export class AchievementMenuComponent implements OnInit {
   public ach_list: any = [];
   private ach_board: any = [];
 
-  constructor(public authService: AuthService, public home$: HomeComponent) {
+  constructor(public authService: AuthService, public home$: HomeComponent, public level$:LevelService) {
     this.ach_list = this.home$.getAch();
 
     if (localStorage.getItem('LocalUser')){
@@ -123,12 +125,18 @@ export class AchievementMenuComponent implements OnInit {
 
     //Add the achievmenet to the board
     this.ach_board.push(ach.id);
-    console.log(this.ach_board);
+    //console.log(this.ach_board);
     
     let key = this.home$.key;
     
-    //We load the new board
+    //Load the new board
     this.home$.getUser().achievement_board=this.ach_board;
+    
+    //Check a Level Up
+    console.log();
+    this.home$.getUser().xp = Number(this.home$.getUser().xp)+Number(ach.experience);
+    this.level$.getLvlUp( this.home$.getUser().xp);
+
     localStorage.setItem("LocalUser", JSON.stringify(this.home$.getUser()));
 
     this.authService
