@@ -12,6 +12,8 @@ export class LevelService {
     user_lvl: number = 0;
     user_exp: number = 0;
 
+    lvl_status:boolean = false;
+
     levelUp(exp:number, nv?: number){
         
         let level = 0;
@@ -45,7 +47,7 @@ export class LevelService {
         this.levelUp(exp,lvl);
         //If lvl up, return new values
         if (lvl < this.user_lvl){
-            //this.home$.lvlUpAlert();
+            this.lvl_status = true;
         }
     }
 

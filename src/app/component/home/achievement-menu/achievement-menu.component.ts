@@ -137,6 +137,10 @@ export class AchievementMenuComponent implements OnInit {
     this.home$.getUser().xp = Number(this.home$.getUser().xp)+Number(ach.experience);
     this.level$.getLvlUp( this.home$.getUser().xp);
 
+    if (this.level$.lvl_status){
+      this.home$.levelAlert();
+    }
+
     localStorage.setItem("LocalUser", JSON.stringify(this.home$.getUser()));
 
     this.authService

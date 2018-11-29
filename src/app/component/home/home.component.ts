@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
   public user: any;
   public ach_list: any = [];
   public key:string;
+  public lvl_up:boolean = false;
+  public new_lvl:number = 0 ;
 
   constructor(public authService: AuthService, private router: Router, private level$:LevelService) {
     //Al inicializar el programa cogeremos los datos del usuario para guardarlos en la Variable User.
@@ -38,6 +40,11 @@ export class HomeComponent implements OnInit {
               //Lvl up the user in local vars
               level$.levelUp(this.user.xp);
               
+              //Update the Rang
+              this.new_lvl = level$.user_lvl;
+
+              
+              
             }
           }
 
@@ -47,6 +54,14 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  levelAlert(){
+    if(this.level$.lvl_status){
+      this.new_lvl = this.level$.user_lvl
+      this.lvl_up = true;
+      this.level$.lvl_status = false;
+    }
+  }
+
   getUser() {
     return this.user;
   }
@@ -54,10 +69,6 @@ export class HomeComponent implements OnInit {
     return this.ach_list;
   }
 
-  lvlUpAlert(){
-    //Call a set value of the inner HTML to show the Alert
-    console.log("Level UP");
-  }
 
   ngOnInit() {}
 
