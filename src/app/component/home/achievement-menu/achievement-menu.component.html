@@ -1,15 +1,41 @@
 <div class="container-fluid mt-3 mb-5">
+    <div *ngIf="alert" class="row bg-zas1 d-flex align-items-center justify-content-between m-3 p-3 rounded border border-danger position-absolute alert_position">
+        <div class="col-10 p-auto">
+            <h4>
+                <strong class="text-danger">!Error!</strong>
+                <span class="mb-3"> Insuficientes: </span>
+            </h4>
+            <span *ngIf="alert_points" class="font-italic">
+                <fa-icon icon="eye" class="text-danger"></fa-icon> Puntos
+            </span>
+            <span *ngIf="alert_lens" class="font-weight-bold">
+                <fa-icon icon="bullseye" class="text-danger"></fa-icon> Lentillas
+            </span>
+            <span *ngIf="alert_glass" class="font-weight-bold">
+                <fa-icon icon="glasses" class="text-danger"></fa-icon> Cristales
+            </span>
+            <span *ngIf="alert_other" class="font-weight-bold">
+                <fa-icon icon="yin-yang" class="text-danger"></fa-icon> Otros
+            </span>
+        </div>
+
+        <fa-icon icon="times-circle" class="fa-2x text-danger rounded rounded-circle col-2" (click)="this.alertOver()"></fa-icon>
+
+    </div>
+
     <div *ngFor="let ach of ach_list;let i = index" class="row pr-4 pl-4 pt-3">
 
-        <button [ngClass]="{'btn-zas1 col-7': !ach.unlock, 'btn btn-secondary col-12':ach.unlock}" type="button" class="btn w-100 text-left" (click)="ach.isCollapsed = !ach.isCollapsed" [attr.aria-expanded]="!ach.isCollapsed">
+        <button [ngClass]="{'btn-zas1 col-7': !ach.unlock, 'btn btn-secondary col-12':ach.unlock}" type="button" class="btn w-100 text-left"
+            (click)="ach.isCollapsed = !ach.isCollapsed" [attr.aria-expanded]="!ach.isCollapsed">
             {{ach.name}}
         </button>
 
-        <button [ngClass]="{'btn-zas2 col-5 d-flex flex-row-reverse justify-content-around': !ach.unlock, 'btn btn-secondary d-none':ach.unlock}" type="button" class="btn w-100 " (click)="ach.unlock = buy(ach.unlock, ach)">
+        <button [ngClass]="{'btn-zas2 col-5 d-flex flex-row-reverse justify-content-around': !ach.unlock, 'btn btn-secondary d-none':ach.unlock}"
+            type="button" class="btn w-100 " (click)="ach.unlock = buy(ach.unlock, ach)">
             <span class="p-1">{{ach.cost}} <fa-icon icon="eye" class="text-zas1"></fa-icon></span>
-            <span *ngIf="ach.type_token==1" class="p-1">{{ach.token}} <fa-icon icon="bullseye"   class="text-zas1"></fa-icon></span>
-            <span *ngIf="ach.type_token==2" class="p-1">{{ach.token}} <fa-icon icon="glasses"    class="text-zas1"></fa-icon></span>
-            <span *ngIf="ach.type_token==3" class="p-1">{{ach.token}} <fa-icon icon="yin-yang"   class="text-zas1"></fa-icon></span>
+            <span *ngIf="ach.type_token==1" class="p-1">{{ach.token}} <fa-icon icon="bullseye" class="text-zas1"></fa-icon></span>
+            <span *ngIf="ach.type_token==2" class="p-1">{{ach.token}} <fa-icon icon="glasses" class="text-zas1"></fa-icon></span>
+            <span *ngIf="ach.type_token==3" class="p-1">{{ach.token}} <fa-icon icon="yin-yang" class="text-zas1"></fa-icon></span>
         </button>
 
         <div class="w-100" id="collapseExample{{i}}" [ngbCollapse]="!ach.isCollapsed">

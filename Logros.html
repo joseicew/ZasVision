@@ -77,40 +77,113 @@
         var error_des = false;
         var error_cost = false;
         var error_exp = false;
+        var error_token = false;
+        var contains_tokens = false;
+
+        //True = no error, false = 1 error
+        var no_error = true;
 
         var ref = firebase.database().ref("achievements");
 
-        ref.on("value", function(snapshot) {
+        //ref.on("value", function(snapshot) {
 
-            document.getElementById('output').innerHTML = JSON.stringify(snapshot.val(), null, 2);
+        // document.getElementById('output').innerHTML = JSON.stringify(snapshot.val(), null, 2);
 
-        });
+        //});
+        function limpiar() {
+            document.getElementById('name').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('cost').value = '';
+            document.getElementById('experience').value = '';
+        }
+
+        function errorList() {
+            if (error_name) {
+                document.getElementById("error").innerHTML = "<div class=\"alert alert-danger alert-dismissible error_alert fade show\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>¡Error!</strong> El logro no contiene<strong> nombre</strong></div>";
+                error_name = false;
+                no_error = false;
+            } else if (error_des) {
+                document.getElementById("error").innerHTML = "<div class=\"alert alert-danger alert-dismissible error_alert fade show\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>¡Error!</strong> El logro no contiene<strong> descripcion</strong></div>";
+                error_des = false;
+                no_error = false;
+            } else if (error_cost) {
+                document.getElementById("error").innerHTML = "<div class=\"alert alert-danger alert-dismissible error_alert fade show\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>¡Error!</strong> El logro no contiene<strong> coste</strong></div>";
+                error_cost = false;
+                no_error = false;
+            } else if (error_exp) {
+                document.getElementById("error").innerHTML = "<div class=\"alert alert-danger alert-dismissible error_alert fade show\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>¡Error!</strong> El logro no contiene<strong> experiencia</strong></div>";
+                error_exp = false;
+                no_error = false;
+            } else if (error_token) {
+                document.getElementById("error").innerHTML = "<div class=\"alert alert-danger alert-dismissible error_alert fade show\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>¡Error!</strong> El logro contiene<strong> tokens</strong> o <strong> tipos asignados</strong></div>";
+                error_token = false;
+                no_error = false;
+            } else if (no_error) {
+                document.getElementById("error").innerHTML = "<div class=\"alert alert-success alert-dismissible error_alert fade show\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>El <strong>Logro (" + achie.name + ")</strong> de <strong>Coste (" + achie.cost + ")</strong> y <strong>Experiencia (" + achie.experience + ")</strong> ha sido añadido con éxito.</div>";
+                if (contains_tokens) {
+                    contains_tokens = false;
+                }
+            }
+
+            limpiar();
+        }
 
         function writeUserData() {
 
-            //Lista de caracteristicas del logro
-            console.log(document.getElementById('name').value);
+            //Name
             if (document.getElementById('name').value != '') {
                 achie.name = document.getElementById('name').value;
             } else {
                 error_name = true;
             }
-            achie.description = document.getElementById('description').value;
-            achie.cost = document.getElementById('cost').value;
-            achie.experience = document.getElementById('experience').value;
 
-            if (document.getElementById('type_token').value >= 0 &&
-                document.getElementById('token').value >= 0) {
+            //Description
+            if (document.getElementById('description').value != '') {
+                achie.description = document.getElementById('description').value;
+            } else {
+                error_des = true;
+            }
+
+            //Cost
+            if (document.getElementById('cost').value != '') {
+                achie.cost = document.getElementById('cost').value;
+            } else {
+                error_cost = true;
+            }
+
+            //Experience
+            if (document.getElementById('experience').value != '') {
+                achie.experience = document.getElementById('experience').value;
+            } else {
+                error_exp = true;
+            }
+
+            if (document.getElementById('type_token').value > 0 &&
+                document.getElementById('token').value != 0) {
                 achie.type_token = document.getElementById('type_token').value;
                 achie.token = document.getElementById('token').value;
+                contains_tokens = true;
+            } else if (
+                document.getElementById('type_token').value > 0 ||
+                document.getElementById('token').value != 0) {
+                error_token = true;
             }
+
+            errorList();
 
             //Random con la hora del sistema
             id = new Date().valueOf();
+            if (no_error) {
 
-            //URL a guardar
-            referencia = "achievements/" + id;
-            firebase.database().ref(referencia).set(achie);
+                //comprobación
+                console.log("lo va a guardar");
+
+                //URL a guardar
+                referencia = "achievements/" + id;
+                firebase.database().ref(referencia).set(achie);
+            } else {
+                no_error = true;
+            }
         }
     </script>
 
@@ -121,11 +194,11 @@
 <body class="container bg-zas3">
     <div class="d-flex justify-content-center m-0 p-0">
         <img src="https://previews.dropbox.com/p/thumb/AAPxYgJCetNUof1IzOYwDocjxjARxsR1EDo0IcJhjvZE9HVuKUt4KasKUVYF0z24gJoUJhWndELeYH0XD6ULS1OdlnZTvtPUyRoxLP0Yv2JDHeSvpBrCcK4Uh4InOgXvrBwbv3uyu0bn_YR_y5y5rR6jhxL68uC9DHhKaKDsU7-P6Q/p.png?size=1600x1200&size_mode=3"
-            alt="" class="h-100 m-4 col-3">
+            alt="" class="h-100 m-4 col-5">
 
     </div>
 
-    <div class="p-4 row col-4 m-auto bg-zas1 rounded" id="input">
+    <div class="p-4 row col-8 m-auto bg-zas1 rounded" id="input">
 
         <h2 class="col-12 text-center">Logro</h2>
         <input type="text" class="col-9 d-inline ml-auto mr-auto text-center rounded" name="" id="name" placeholder="Nombre" required>
@@ -138,7 +211,7 @@
         <hr class="col-12 p-0">
 
         <!-- Alerts! -->
-        <div id="error"></div>
+        <div id="error" class="d-flex justify-content-center w-100 mt-3"></div>
 
         <hr class="col-12 mb-3 p-0">
 

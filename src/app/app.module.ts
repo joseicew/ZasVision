@@ -36,6 +36,7 @@ import { APP_ROUTING } from "./app.routes";
 
 //Service
 import { AuthService } from "./services/auth.service";
+import { LevelService } from "./services/level.service";
 
 @NgModule({
   declarations: [AppComponent, LogInComponent, HomeComponent, SigninComponent,HomeMenuComponent, AchievementMenuComponent, ProfileMenuComponent],
@@ -51,7 +52,7 @@ import { AuthService } from "./services/auth.service";
     AngularFireStorageModule,
     AngularFireAuthModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, LevelService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

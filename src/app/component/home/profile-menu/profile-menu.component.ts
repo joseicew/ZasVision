@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeComponent } from '../home.component';
+import { LevelService } from '../../../services/level.service';
 
 @Component({
   selector: 'app-profile-menu',
@@ -9,7 +10,7 @@ import { HomeComponent } from '../home.component';
 export class ProfileMenuComponent implements OnInit {
 
   //Data of the game
-  percent = 50 ;
+  percent = 0 ;
   user_rank = 0;
   user:any;
   
@@ -19,7 +20,7 @@ export class ProfileMenuComponent implements OnInit {
   other_token:number;
   actual_points:number;
 
-  constructor(public home$:HomeComponent) {
+  constructor(public home$:HomeComponent, public level$:LevelService) {
   //Filling data
   if (localStorage.getItem('LocalUser')){
     this.user = JSON.parse(localStorage.getItem('LocalUser'));
@@ -30,6 +31,9 @@ export class ProfileMenuComponent implements OnInit {
     this.other_token = this.user.token3;
     this.actual_points = this.user.achievement_point;
   
+    this.user_rank = level$.user_lvl;
+    this.percent = level$.user_exp / this.user_rank ;
+
     }
     
    }

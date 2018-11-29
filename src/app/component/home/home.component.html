@@ -3,18 +3,27 @@
         <ul class="navbar-nav row p-0">
             <li class="nav-item col-4 p-0 text-center">
                 <a class="nav-link m-2" [routerLinkActive]="['true','zas-focus']" [routerLink]="['homeMenu']">
-                    <fa-icon icon="home"></fa-icon> Inicio</a>
+                    <fa-icon icon="home"></fa-icon> Inicio
+                </a>
             </li>
             <li class="nav-item col-4 p-0 text-center">
                 <a class="nav-link m-2" [routerLinkActive]="['true','zas-focus']" [routerLink]="['achievementMenu']">
-                    <fa-icon icon="medal"></fa-icon> Logros</a>
+                    <fa-icon icon="medal"></fa-icon> Logros
+                </a>
             </li>
             <li class="nav-item col-4 p-0 text-center">
                 <a class="nav-link m-2" [routerLinkActive]="['true','zas-focus']" [routerLink]="['profileMenu']">
-                    <fa-icon icon="user-circle"></fa-icon> Perfil</a>
+                    <fa-icon icon="user-circle"></fa-icon> Perfil
+                </a>
             </li>
         </ul>
     </div>
 </nav>
+
+<div *ngIf="lvl_up" class="bg-zas1 p-2 ">
+    <div class="d-flex align-items-center justify-content-between row">
+      <h3 class="col-9 p-auto"><fa-icon class="text-success" icon="level-up-alt"></fa-icon> <strong> Rango: {{this.new_lvl}} </strong></h3> <fa-icon icon="times-circle" class="fa-2x text-danger rounded rounded-circle col-3" (click)="lvl_up=false"></fa-icon>
+    </div>
+  </div>
 
 <router-outlet></router-outlet>
