@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthService } from "src/app/services/auth.service";
+import { LevelService } from "src/app/services/level.service";
 import { HomeComponent } from "../home.component";
 import { Achievement } from "../../../interfaces/achievement.interface";
+import { stringify } from "@angular/core/src/render3/util";
 
 @Component({
   selector: "app-achievement-menu",
@@ -12,7 +14,14 @@ export class AchievementMenuComponent implements OnInit {
   public ach_list: any = [];
   private ach_board: any = [];
 
-  constructor(public authService: AuthService, public home$: HomeComponent) {
+  //Alert vars
+  private alert = false;
+  private alert_points = false;
+  private alert_lens = false;
+  private alert_glass = false;
+  private alert_other = false;
+  
+  constructor(public authService: AuthService, public home$: HomeComponent, public level$:LevelService) {
     this.ach_list = this.home$.getAch();
 
     if (localStorage.getItem('LocalUser')){
@@ -58,13 +67,17 @@ export class AchievementMenuComponent implements OnInit {
         return true;
       }
     }
+    this.alert = true;
     return false;
   }
 
   canBuyPoints(ach: Achievement) {
     if (ach.cost <= this.home$.getUser().achievement_point) {
       return true;
-    } else return false;
+    } else {
+      this.alert_points = true;
+      return false;
+    }
   }
 
   canBuyToken(ach: Achievement) {
@@ -79,17 +92,17 @@ export class AchievementMenuComponent implements OnInit {
           if (ach.token <= this.home$.getUser().token1) {
             return true;
             break;
-          } else return false;
+          } else  {this.alert_lens=true;return false;}
         case "2":
           if (ach.token <= this.home$.getUser().token2) {
             return true;
             break;
-          } else return false;
+          } else {this.alert_glass=true;return false;}
         case "3":
           if (ach.token <= this.home$.getUser().token3) {
             return true;
             break;
-          } else return false;
+          } else {this.alert_other=true;return false;}
         default:
           return false;
       }
@@ -107,15 +120,12 @@ export class AchievementMenuComponent implements OnInit {
       switch (token_used.toString()) {
         case "1":
           this.home$.getUser().token1 -= ach.token;
-          //console.log(this.home$.getUser().token1 - ach.token);
           break;
           case "2":
           this.home$.getUser().token2 -= ach.token;
-          //console.log(this.home$.getUser().token2- ach.token);
           break;
           case "3":
           this.home$.getUser().token3 -= ach.token;
-          //console.log(this.home$.getUser().token3 - ach.token);
           break;
         default:
           break;
@@ -123,12 +133,20 @@ export class AchievementMenuComponent implements OnInit {
 
     //Add the achievmenet to the board
     this.ach_board.push(ach.id);
-    console.log(this.ach_board);
     
     let key = this.home$.key;
     
-    //We load the new board
+    //Load the new board
     this.home$.getUser().achievement_board=this.ach_board;
+    
+    //Check a Level Up
+    this.home$.getUser().xp = Number(this.home$.getUser().xp)+Number(ach.experience);
+    this.level$.getLvlUp( this.home$.getUser().xp);
+
+    if (this.level$.lvl_status){
+      this.home$.levelAlert();
+    }
+
     localStorage.setItem("LocalUser", JSON.stringify(this.home$.getUser()));
 
     this.authService
@@ -136,6 +154,14 @@ export class AchievementMenuComponent implements OnInit {
       .subscribe(updateUser => {
         console.log(updateUser);
       });
+  }
+
+  alertOver(){
+    this.alert=false;
+    this.alert_points = false;
+    this.alert_lens = false;
+    this.alert_glass = false;
+    this.alert_other = false;
   }
 
   ngOnInit() {}
