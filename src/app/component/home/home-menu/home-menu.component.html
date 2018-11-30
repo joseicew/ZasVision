@@ -1,1 +1,9 @@
-<div>Home</div>
+<div *ngFor="let buy of buy_array" class="row pr-4 pl-4 pt-3">
+    <div class="bg-zas1 p-3 text-center m-auto border border-success buy_border">
+        <h3 class="text-secondary">¡Gracias por tu compra!</h3>
+        <h5>Has ganado : {{buy.points}} <fa-icon icon="eye" class="text-success"></fa-icon></h5>
+        <h5 *ngIf="buy.type_token == 1">Además de : {{buy.token}} <fa-icon icon="bullseye" class="text-success"></fa-icon></h5>
+        <h5 *ngIf="buy.type_token == 2">Además de : {{buy.token}} <fa-icon icon="glasses" class="text-success"></fa-icon></h5>
+        <h5 *ngIf="buy.type_token == 3">Además de : {{buy.token}} <fa-icon icon="yin-yang" class="text-success"></fa-icon></h5>
+    </div>
+</div>
