@@ -20,17 +20,14 @@ export class HomeComponent implements OnInit {
   constructor(public authService: AuthService, private router: Router, private level$:LevelService) {
     //Al inicializar el programa cogeremos los datos del usuario para guardarlos en la Variable User.
     this.authService.getUsers().subscribe(data => {
-      console.log("All users" + data);
 
       //Al entrar un usuario lo restacamos para poder cargar sus datos
       firebase.auth().onAuthStateChanged(getuser => {
         if (getuser) {
-          console.log(getuser.email);
 
           for (let user in data) {
             
             if (data[user].email == getuser.email) {
-              console.log("Usuario encontrado");
               this.user = data[user];
               this.user.pass='';
               

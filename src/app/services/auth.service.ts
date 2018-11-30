@@ -119,7 +119,6 @@ export class AuthService {
     
     for(let i = 0 ; i< Object.keys(users).length ; i++ ){
       if(users[Object.keys(users)[i]].email == email){
-        console.log(Object.keys(users)[i]);
         return Object.keys(users)[i];
       }
     }

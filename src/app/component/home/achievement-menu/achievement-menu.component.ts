@@ -26,7 +26,6 @@ export class AchievementMenuComponent implements OnInit {
 
     if (localStorage.getItem('LocalUser')){
       let user = JSON.parse(localStorage.getItem('LocalUser'));
-      //console.log("carga de datos: "+user);
       this.ach_board = user.achievement_board; 
     }
     
@@ -115,7 +114,6 @@ export class AchievementMenuComponent implements OnInit {
 
     //Special Tokens
     let token_used: number = ach.type_token;
-    console.log("Token type: "+token_used);
     if (token_used != 0)
       switch (token_used.toString()) {
         case "1":
@@ -152,7 +150,6 @@ export class AchievementMenuComponent implements OnInit {
     this.authService
       .actualizarUser(this.home$.getUser(), key)
       .subscribe(updateUser => {
-        console.log(updateUser);
       });
   }
 

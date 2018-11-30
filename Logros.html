@@ -169,10 +169,6 @@
             //Random con la hora del sistema
             id = new Date().valueOf();
             if (no_error) {
-
-                //comprobación
-                console.log("lo va a guardar");
-
                 //URL a guardar
                 referencia = "achievements/" + id;
                 firebase.database().ref(referencia).set(achie);

@@ -35,7 +35,6 @@ export class LevelService {
 
         this.user_exp = exp;
         this.user_lvl = level;
-        console.log(this.user_lvl);
         
         
     }

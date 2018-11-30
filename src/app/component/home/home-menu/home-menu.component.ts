@@ -18,8 +18,6 @@ export class HomeMenuComponent implements OnInit {
       for (let i = 0; i < Object.keys(buy_board).length; i++) 
       {
         this.buy_array[i] = buy_board[Object.keys(buy_board)[i]];
-        console.log(this.buy_array[i]);
-
       }
     }
   }
