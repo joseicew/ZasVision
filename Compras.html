@@ -59,8 +59,9 @@
 
         firebase.initializeApp(config);
 
+        var emial = "";
+
         var points = {
-            email: "",
 
             //SPecial Token
             token: 0,
@@ -77,7 +78,7 @@
 
         function writeUserData() {
             //Lista de caracteristicas del logro
-            points.email = document.getElementById('email').value;
+            this.email = document.getElementById('email').value;
             points.points = document.getElementById('points').value;
 
             if (document.getElementById('type_token').value >= 0 &&
@@ -97,7 +98,7 @@
 
                 for (var user in users) {
 
-                    if (users[user].email === points.email) {
+                    if (users[user].email === this.email) {
 
                         if (parseInt(points.points) == 0 || points.points == '') {
                             error_puntos = true;
@@ -130,10 +131,13 @@
                 //URL a guardar
                 if (users && (user_UID != "") && !error_email && !error_puntos) {
 
-                    console.log("Added");
-                    referencia = "User/" + user_UID;
 
+                    referencia = "User/" + user_UID;
                     firebase.database().ref(referencia).set(users[user_UID]);
+
+                    id = new Date().valueOf();
+                    referencia2 = "User/" + user_UID+"/buy_board/"+id;
+                    firebase.database().ref(referencia2).set(points);
 
 
                     document.getElementById("error").innerHTML = "<div class=\"alert alert-success alert-dismissible error_alert fade show\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button><strong>¡Correcto!</strong> El usuario <strong>" + users[user_UID].nick + "</strong> ha recibido <strong>" + points.points + "</strong> puntos, teniendo un total de <strong>" + users[user_UID].achievement_point + "</strong></div>";

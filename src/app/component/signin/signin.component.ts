@@ -22,7 +22,6 @@ export class SigninComponent implements OnInit {
     token3:0,
     xp:0,
     achievement_point:0,
-    achievement_point_total:0,
     achievement_board:[""],
 }
   pass_test:string;

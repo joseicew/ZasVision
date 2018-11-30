@@ -1,6 +1,4 @@
 export interface User{
-    uid?:string;
-
     email:string;
     pass:string;
     
@@ -13,8 +11,10 @@ export interface User{
     token3?:number; //Otros
 
     achievement_point?:number; //Puntos
-    achievement_point_total?:number; //Totales acumulados
     achievement_board?:string[]; //Lista de logros desbloqueados
-
+    
+    buy_board?:number; //Totales acumulados
+    
     xp:number;
+
 }
