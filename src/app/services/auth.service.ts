@@ -22,7 +22,7 @@ export class AuthService {
   ZV_achievementsURL: string =
     "https://zasvision-86b04.firebaseio.com/achievements.json";
 
-  public logInError:boolean;
+  public logInError:boolean=false;
 
   constructor( 
     public router: Router, 
@@ -37,11 +37,9 @@ export class AuthService {
       .then(() => {
         this.router.navigate(["/home"]);
       })
-      .catch(function(error) {
+      .catch((error) => {
         if (error) {
-          console.log(error);
-          this.logInError=true;
-        }
+          this.logInError = true;        }
       });
 
     }

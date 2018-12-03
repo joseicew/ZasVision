@@ -1,8 +1,8 @@
-<div id="oferta">
-    <img src="" alt="">
+<div class="d-flex justify-content-center align-self-start p-3 stiky-top">
+    <img class="col-12 img-fluid w-75 h-25 img_ofert" src="" alt="" id="oferta">
 </div>
 
-<div *ngFor="let buy of buy_array" class="row pr-4 pl-4 pt-3">
+<div *ngFor="let buy of buy_array" class="col-12 pr-4 pl-4 pt-3">
     <div class="bg-zas1 p-3 text-center m-auto border border-success buy_border">
         <h3 class="text-secondary">¡Gracias por tu compra!</h3>
         <h5>Has ganado : {{buy.points}} <fa-icon icon="eye" class="text-success"></fa-icon></h5>

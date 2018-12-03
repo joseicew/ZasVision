@@ -12,15 +12,17 @@ export class LogInComponent implements OnInit {
   uid:any = '';
   wrongData:boolean=true;
 
-  constructor(public authService: AuthService) {}
-  s
+  constructor(public authService: AuthService) {
+    if (localStorage.getItem('LocalUser')){
+      localStorage.removeItem('LocalUser');
+    }
+  }
+  
   ngOnInit() {}
 
   logIn(email: string, pass: string,) {
     this.authService.logIn(email, pass);
-    if (this.authService.logInError){
-      this.wrongData=false;
-    }
+
   }
   createUser(email: string, pass: string,) {
     this.authService.createUser(email, pass);

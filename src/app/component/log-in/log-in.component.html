@@ -4,7 +4,7 @@
         <img src="src\assets\img\LogoTransparente.gif" class="w-100 h-50 mb-5  bg-gray rounded img-rounded p-1 " alt="Zas Vision Logo">
         <img src="src\assets\img\LogIn.png" class="logInImg" alt="Imagen Inicio">
 
-        <ngb-alert *ngIf="!wrongData" class="position-absolute logInError" [dismissible]="true" (close)="wrongData=true">
+        <ngb-alert *ngIf="this.authService.logInError" class="position-absolute logInError" [dismissible]="true" (close)="this.authService.logInError=false">
             <strong>¡Error!</strong><br> No se encuentra al usuario.
         </ngb-alert>
 
