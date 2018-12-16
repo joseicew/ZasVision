@@ -37,11 +37,9 @@ export class HomeComponent implements OnInit {
               //Lvl up the user in local vars
               level$.levelUp(this.user.xp);
               
-              //Update the Rang
+              //Update the Rangk
               this.new_lvl = level$.user_lvl;
 
-              
-              
             }
           }
 

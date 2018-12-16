@@ -11,10 +11,10 @@ const ROUTES: Routes = [
     path: "home",
     component: HomeComponent,
     children: [
-        {path: '', redirectTo: 'homeMenu', pathMatch: 'full' },
-        {path:"homeMenu",component:HomeMenuComponent},
-        {path:"achievementMenu",component:AchievementMenuComponent},
-        {path:"profileMenu",component:ProfileMenuComponent},
+      {path:"homeMenu",component:HomeMenuComponent},
+      {path:"achievementMenu",component:AchievementMenuComponent},
+      {path:"profileMenu",component:ProfileMenuComponent},
+      {path: "**",  pathMatch: 'full',redirectTo: 'homeMenu' },
     ]
   },
   { path: "signin", component: SigninComponent },

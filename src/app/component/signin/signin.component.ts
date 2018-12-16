@@ -25,12 +25,22 @@ export class SigninComponent implements OnInit {
     achievement_board:[""],
 }
   pass_test:string;
-
+  pass_different = false;
+  pass_short = false; 
+  
   constructor(private authService:AuthService, public router: Router) { }
 
+  setFalse(){
+    this.pass_short=false;
+    this.pass_different = false;
+  }
+
   guardar(){
-    if (this.pass_test!= this.user.pass){
-      console.log("Las contraseñas no son iguales");
+    if(this.user.pass.length < 6) {
+      this.pass_short=true;
+      if(this.pass_test!= this.user.pass) {this.pass_different = true;}
+    }else if (this.pass_test!= this.user.pass){
+      this.pass_different = true;
     }else{
       this.authService.guardar(this.user).subscribe(
         data => {

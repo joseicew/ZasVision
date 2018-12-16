@@ -23,6 +23,8 @@ export class AuthService {
     "https://zasvision-86b04.firebaseio.com/achievements.json";
 
   public logInError:boolean=false;
+  public createError:boolean=false;
+  public createError_alert:boolean=false;
 
   constructor( 
     public router: Router, 
@@ -39,7 +41,8 @@ export class AuthService {
       })
       .catch((error) => {
         if (error) {
-          this.logInError = true;        }
+          this.logInError = true;        
+        }
       });
 
     }
@@ -58,9 +61,11 @@ export class AuthService {
   createUser(email: string, pass: string) {
     this.afAuth.auth
       .createUserWithEmailAndPassword(email, pass)
-      .catch(function(error) {
+      .catch((error) => {
         if (error) {
           console.log(error);
+          this.createError=true
+          this.router.navigate(["/login"]);
         } else {
           this.router.navigate(["/home"]);
         }
@@ -69,18 +74,24 @@ export class AuthService {
 
   guardar(user: User) {
     this.createUser(user.email ,user.pass);
-    this.logIn(user.email ,user.pass);
-    let body = JSON.stringify(user);
-    let headers = new Headers({
-      "Content-Type": "application/json"
-    });
-    
-    return this.http.post(this.ZV_usersURL, body, { headers }).pipe(
-      map(res => {
-        console.log(res.json);
-        return res.json();
-      })
-    );
+    if (this.createError){
+      this.logIn(user.email ,user.pass);
+
+      let body = JSON.stringify(user);
+      let headers = new Headers({
+        "Content-Type": "application/json"
+      });
+      
+      return this.http.post(this.ZV_usersURL, body, { headers }).pipe(
+          map(res => {
+            console.log(res.json);
+            return res.json();
+          })
+        );
+    }else{
+      this.createError=false;
+      this.createError_alert=true;
+    }
   }
 
   getUser(key$: string) {

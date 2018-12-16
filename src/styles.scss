@@ -6,9 +6,18 @@ body {
     background-image: url('./assets/img/BgLogin.jpg');
     background-color: #cccccc;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: 100% 200%;
     background-attachment: fixed;
     background-color: #5B8081;
+}
+
+.border_personal{
+    background-color: grey;
+    opacity: 0.8;
+    border-radius: 25px;
+    border-color: darkcyan darkgoldenrod;
+    border-width: 4px;
+    border-style: dashed;
 }
 
 a.text-zas1:hover,

@@ -1,38 +1,47 @@
-<h2 class="text-center text-zas2 bg-zas1 border border-3 border-zas2 ml-5 mr-5 p-3 rounded rounded-circle  ">Registro</h2>
+<h2 class="text-center border_personal text-zas1 mt-3 ml-5 mr-5 p-3">Re<span class="text-zas2">Gis</span>Tro</h2>
 
-<div class="row">
-    <div class="col-md-12 mt-5">
-        <form (ngSubmit)="guardar()" #forma="ngForm">
+<form class="mt-5 p-1" (ngSubmit)="guardar()" #forma="ngForm">
 
 
-            <div class="form-group">
-                <input [(ngModel)]="user.name" type="text" name="name" class="border-3 border-zas2 rounded-top form-control" placeholder="Nombre" required>
-            </div>
-
-            <div class="form-group">
-                <input [(ngModel)]="user.surname" type="text" name="surname" class="border-3 border-zas2 rounded-top form-control" placeholder="Apellido" required>
-            </div>
-
-            <div class="form-group">
-                <input [(ngModel)]="user.email" type="email" name="email" class="form-control border border-3  border-zas2" placeholder="Email" required>
-            </div>
-
-            <div class="form-group">
-                <input [(ngModel)]="user.nick" type="text" name="nick" class="form-control border border-zas2 border-3 " placeholder="Apodo" required>
-            </div>
-
-            <div class="form-group">
-                <input [(ngModel)]="user.pass" type="password" name="contraseña" class="border-3 border-bottom-0 border border-zas2 form-control" placeholder="Contraseña" required>
-                <input [(ngModel)]="pass_test" type="password" name="contraseña" class="border-3 border border-zas2  form-control" placeholder="Repita la contraseña" required>
-            </div>
-
-            <div class="form-group">
-                <button [disabled]="!forma.valid" type="submit" class="col-8 btn btn-zas2">
-                Finalizar Registro
-              </button>
-                <button class="col-4 btn btn-danger" [routerLink]="['/login']">Regresar</button>
-
-            </div>
-        </form>
+    <div class="form-group">
+        <input [(ngModel)]="user.name" type="text" name="name" class="border-3 border-zas2 rounded-top form-control"
+            placeholder="Nombre" required>
     </div>
-</div>
+
+    <div class="form-group">
+        <input [(ngModel)]="user.surname" type="text" name="surname" class="border-3 border-zas2 rounded-top form-control"
+            placeholder="Apellido" required>
+    </div>
+
+    <div class="form-group">
+        <input [(ngModel)]="user.email" type="email" name="email" class="form-control border border-3  border-zas2"
+            placeholder="Email" required>
+    </div>
+
+    <div class="form-group">
+        <input [(ngModel)]="user.nick" type="text" name="nick" class="form-control border border-zas2 border-3 "
+            placeholder="Apodo" required>
+    </div>
+
+    <div class="form-group">
+        <input [(ngModel)]="user.pass" minlength="6" #uname="ngModel" [ngClass]="{'border border-danger': this.pass_short,'border-zas2': !this.pass_short }"
+            type="password" name="contraseña" class="border-3 border form-control" placeholder="Contraseña" required>
+        <input [(ngModel)]="pass_test" type="password" name="contraseña" [ngClass]="{'border border-danger': this.pass_different,'border-zas2': !this.pass_different }"
+            class="border-3 border form-control" placeholder="Repita la contraseña" required>
+    </div>
+
+    <div class="form-group">
+        <button [disabled]="!forma.valid" type="submit" class="col-8 btn btn-zas2">
+            Finalizar Registro
+        </button>
+        <button class="col-4 btn btn-danger" [routerLink]="['/login']">Regresar</button>
+
+    </div>
+</form>
+
+<ngb-alert *ngIf="this.pass_short || this.pass_different" class="bg-zas1 m-3 p-3 rounded border border-danger"
+    [dismissible]="true" (close)="this.setFalse()">
+    <div class="w-100"> <strong class="text-danger">¡Error!</strong></div>
+    <div *ngIf="this.pass_short" class="text-danger">La contraseña es demasiado pequeña</div>
+    <div *ngIf="this.pass_different" class="text-danger"> Las contraseñas no son iguales</div>
+</ngb-alert>
