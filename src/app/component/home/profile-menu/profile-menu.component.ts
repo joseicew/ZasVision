@@ -20,8 +20,11 @@ export class ProfileMenuComponent implements OnInit {
   other_token:number;
   actual_points:number;
 
+  nick:string;
+
   constructor(public home$:HomeComponent, public level$:LevelService) {
   //Filling data
+  
   if (localStorage.getItem('LocalUser')){
     this.user = JSON.parse(localStorage.getItem('LocalUser'));
   
@@ -30,9 +33,14 @@ export class ProfileMenuComponent implements OnInit {
     this.glasses_points = this.user.token2;
     this.other_token = this.user.token3;
     this.actual_points = this.user.achievement_point;
+    this.nick = this.user.nick;
   
+    level$.levelUp(this.user.xp);
+
     this.user_rank = level$.user_lvl;
     this.percent = level$.user_exp / this.user_rank ;
+
+    console.log(this.user);
 
     }
     

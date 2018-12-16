@@ -3,41 +3,41 @@
         <div class="card-header bg-transparent border-zas2 text-secondary d-flex flex-row justify-content-between">
             <h3>
                 RANGO
-                <span class="badge badge-secondary ml-2 mr-3">{{user_rank}} </span>
+                <span class="badge badge-secondary ml-2 mr-3">{{this.user_rank}} </span>
             </h3>
             <button (click)="this.logOut()" class="btn btn-danger rounded rounded-circle"><fa-icon icon="power-off" class="text-zas1"></fa-icon></button>
         </div>
-        <div class="card-body text-zas2" *ngIf="this.home$.getUser()">
-            <h3 class="card-title text-secondary text-center">{{this.home$.getUser().nick}}</h3>
+        <div class="card-body text-zas2">
+            <h3 class="card-title text-secondary text-center">{{this.nick}}</h3>
             <p class="card-text">
                 PUNTOS
                 <fa-icon icon="eye" class="text-zas1"></fa-icon>
-                : {{actual_points}}
+                : {{this.actual_points}}
             </p>
             <p class="card-text">
                 TOTAL
-                <fa-icon icon="medal" class="text-zas1"></fa-icon> : {{total_achievement}}
+                <fa-icon icon="medal" class="text-zas1"></fa-icon> : {{this.total_achievement}}
             </p>
             <hr class="text-zas2">
             <p class="card-text">
                 Lentillas
                 <fa-icon icon="bullseye" class="text-zas1"></fa-icon>
-                : {{contact_lenst_points}}
+                : {{this.contact_lenst_points}}
             </p>
             <p class="card-text">
                 Cristales
                 <fa-icon icon="glasses" class="text-zas1"></fa-icon>
-                : {{glasses_points}}
+                : {{this.glasses_points}}
             </p>
             <p class="card-text">
                 Otros
                 <fa-icon icon="yin-yang" class="text-zas1"></fa-icon>
-                : {{other_token}}
+                : {{this.other_token}}
             </p>
         </div>
         <div class="card-footer bg-transparent border-zas2">
             <div class="progress">
-                <div class="progress-bar progress-bar-striped bg-zas1" role="progressbar" [ngStyle]="{width: getPercent()}" aria-valuenow=" 20 " aria-valuemin="0 " aria-valuemax="100 "></div>
+                <div class="progress-bar progress-bar-striped bg-zas1" role="progressbar" [ngStyle]="{width: this.getPercent()}" aria-valuenow=" 20 " aria-valuemin="0 " aria-valuemax="100 "></div>
             </div>
         </div>
     </div>
