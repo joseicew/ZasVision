@@ -7,12 +7,14 @@ import { AuthService } from "src/app/services/auth.service";
   styleUrls: ["./log-in.component.css"]
 })
 export class LogInComponent implements OnInit {
+  //Variables
   email: string = "";
   pass: string = "";
   uid:any = '';
   wrongData:boolean=true;
 
   constructor(public authService: AuthService) {
+    // Delete the user if its there is someone in the LocalStorage
     if (localStorage.getItem('LocalUser')){
       localStorage.removeItem('LocalUser');
     }

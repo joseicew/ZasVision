@@ -1,3 +1,4 @@
+<!-- Navbar of the App -->
 <nav class="navbar navbar-expand navbar-dark bg-zas2 p-0">
     <div class="col-12" id="navbarText">
         <ul class="navbar-nav row p-0">
@@ -20,10 +21,11 @@
     </div>
 </nav>
 
+<!-- Lvl Up Alert -->
 <div *ngIf="lvl_up" class="bg-zas1 p-2 ">
     <div class="d-flex align-items-center justify-content-between row">
       <h3 class="col-9 p-auto"><fa-icon class="text-success" icon="level-up-alt"></fa-icon> <strong> Rango: {{this.new_lvl}} </strong></h3> <fa-icon icon="times-circle" class="fa-2x text-danger rounded rounded-circle col-3" (click)="lvl_up=false"></fa-icon>
     </div>
   </div>
-
+<!-- Routes -->
 <router-outlet></router-outlet>

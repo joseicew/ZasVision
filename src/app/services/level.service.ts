@@ -22,21 +22,15 @@ export class LevelService {
         }
 
         do{
-            //console.log((exp / (level+1)*100)+"Status:"+((exp / (level+1)*100)>= 1));
-            
-            //console.log("XP1 : "+exp+" LVL:"+level+" Status:"+((exp / ((level+1)*100))>= 1));
             if((exp / ((level+1)*100))>= 1){
                 exp -= (level+1)*100;
                 level++;
-                //console.log("XP2 : "+exp+" LVL:"+level);
             } 
 
         }while ((exp / ((level+1)*100))>= 1);
 
         this.user_exp = exp;
         this.user_lvl = level;
-        
-        
     }
 
     getLvlUp(exp:number){

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SigninComponent implements OnInit {
 
+  //Interface User Empity
    user: User = {
     email:'',
     pass:'',
@@ -24,6 +25,7 @@ export class SigninComponent implements OnInit {
     achievement_point:0,
     achievement_board:[""],
 }
+  // Check of the Alters of the Password
   pass_test:string;
   pass_different = false;
   pass_short = false; 
@@ -35,6 +37,7 @@ export class SigninComponent implements OnInit {
     this.pass_different = false;
   }
 
+  //If all data its correct it saves in the DataBase and create the user, then it goes to the home page
   guardar(){
     if(this.user.pass.length < 6) {
       this.pass_short=true;

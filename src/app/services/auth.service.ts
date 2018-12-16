@@ -14,11 +14,15 @@ import { error } from "@angular/compiler/src/util";
   providedIn: "root"
 })
 export class AuthService {
+  //Generic Route of all users
   ZV_usersURL: string =
     "https://zasvision-86b04.firebaseio.com/User.json";
+  
+  //Route of a single user, need to add user+.json
   ZV_userURL: string =
     "https://zasvision-86b04.firebaseio.com/User";
 
+  //Route of all the achievements
   ZV_achievementsURL: string =
     "https://zasvision-86b04.firebaseio.com/achievements.json";
 

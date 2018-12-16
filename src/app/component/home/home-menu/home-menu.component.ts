@@ -10,11 +10,12 @@ import * as firebase from "firebase";
 })
 export class HomeMenuComponent implements OnInit {
 
+  //Vars
   private buy_array: any = [];
 
   constructor() {
 
-
+    // Taking data from the LocaStorage
     if (localStorage.getItem('LocalUser')) {
 
       let buy_board: any = [];
@@ -22,6 +23,7 @@ export class HomeMenuComponent implements OnInit {
 
       buy_board = user.buy_board;
       
+      //List of shoppings 
       for (let i = 0; i < Object.keys(buy_board).length; i++) {
         this.buy_array[i] = buy_board[Object.keys(buy_board)[i]];
       }

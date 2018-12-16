@@ -1,3 +1,4 @@
+<!-- Alert -->
 <div class="container-fluid mt-3 mb-5">
     <div *ngIf="alert" class="row bg-zas1 d-flex align-items-center justify-content-between m-3 p-3 rounded border border-danger position-absolute alert_position">
         <div class="col-10 p-auto">
@@ -23,6 +24,7 @@
 
     </div>
 
+    <!-- List Of Achievements with cost and descriptions -->
     <div *ngFor="let ach of ach_list;let i = index" class="row pr-4 pl-4 pt-3">
 
         <button [ngClass]="{'btn-zas1 col-7': !ach.unlock, 'btn btn-secondary col-12':ach.unlock}" type="button" class="btn w-100 text-left"

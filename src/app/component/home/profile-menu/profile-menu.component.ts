@@ -40,8 +40,6 @@ export class ProfileMenuComponent implements OnInit {
     this.user_rank = level$.user_lvl;
     this.percent = level$.user_exp / this.user_rank ;
 
-    console.log(this.user);
-
     }
     
    }
