@@ -67,8 +67,7 @@ export class AuthService {
       .createUserWithEmailAndPassword(email, pass)
       .catch((error) => {
         if (error) {
-          console.log(error);
-          this.createError=true
+          this.createError=true;
           this.router.navigate(["/login"]);
         } else {
           this.router.navigate(["/home"]);
@@ -78,7 +77,8 @@ export class AuthService {
 
   guardar(user: User) {
     this.createUser(user.email ,user.pass);
-    if (this.createError){
+    if (!this.createError){
+      console.log("Error");
       this.logIn(user.email ,user.pass);
 
       let body = JSON.stringify(user);

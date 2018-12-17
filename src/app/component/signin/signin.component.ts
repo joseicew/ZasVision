@@ -48,6 +48,7 @@ export class SigninComponent implements OnInit {
       this.authService.guardar(this.user).subscribe(
         data => {
           this.router.navigate(["/home"]);
+          debugger
         },
         error => console.error(error)
       );
